@@ -1,21 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { WeatherRoutingModule } from './weather-routing.module';
-import { WeatherComponent } from './weather.component';
 import { CurrentWeatherComponent } from './components/current-weather/current-weather.component';
 import { ForecastWeatherComponent } from './components/forecast-weather/forecast-weather.component';
-
+import { WeatherComponent } from './components/weather/weather.component';
 
 @NgModule({
   declarations: [
     WeatherComponent,
     CurrentWeatherComponent,
-    ForecastWeatherComponent
+    ForecastWeatherComponent,
   ],
-  imports: [
-    CommonModule,
-    WeatherRoutingModule
-  ]
+  imports: [CommonModule, WeatherRoutingModule],
 })
-export class WeatherModule { }
+export class WeatherModule {}
