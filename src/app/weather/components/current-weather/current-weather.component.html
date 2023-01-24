@@ -1,9 +1,9 @@
 <i class="uil uil-taxi"></i>
 <div class="flex flex-row justify-center my-6">
   <div class="flex flex-row w-2/4 justify-center">
-    <!-- <p class="text-white text-xl font-extralight">
-      Sunday, 31 May 2022 | Local Time : 12 : 56pm
-    </p> -->
+    <p class="text-white text-xl font-extralight">
+      {{ formatDateTime(weather?.dt) }}
+    </p>
   </div>
   <div class="flex flex-row w-2/4 justify-center">
     <button class="text-xl text-white font-light">°C</button>
@@ -13,20 +13,20 @@
 </div>
 
 <div class="flex items-center justify-center my-3">
-  <p class="text-white text-3xl font-medium">Midrand</p>
+  <p class="text-white text-3xl font-medium">{{ weather?.name }}</p>
 </div>
 
 <div class="flex items-center justify-center py-6 text-xl text-cyan-300">
-  <p>Clear</p>
+  <p>{{ weather?.main }}</p>
 </div>
 
 <div class="flex items-center justify-center my-3">
   <div class="flex flex-row items-center justify-between text-white py-3">
     <img
-      src="http://openweathermap.org/img/wn/10d@2x.png"
-      alt=""
+      [src]="'http://openweathermap.org/img/wn/' + weather?.icon + '@2x.png'"
+      alt="{{ weather?.icon }}"
       class="w-20"
     />
-    <p class="text-5xl">56 °</p>
+    <p class="text-5xl">{{ weather?.temp | number : "1.0-0" }} °</p>
   </div>
 </div>
