@@ -1,5 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
-import { map, mergeMap, Observable, of, switchMap } from 'rxjs';
+import {
+  filter,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  share,
+  switchMap,
+  toArray,
+} from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { APP_URL, APP_KEY, APP_UNIT } from 'src/app/app.config';
 import { IApiKey } from '../types/api-key.interface';
@@ -44,7 +53,8 @@ export class ApiService {
           icon: response.weather[0].icon,
           main: response.weather[0].main,
         };
-      })
+      }),
+      share()
     );
   }
 
@@ -63,7 +73,18 @@ export class ApiService {
         })
       ),
       map((response) => response.list),
-      mergeMap((response) => of(...response))
+      mergeMap((response) => of(...response)),
+      filter((response, index) => index % 8 === 0),
+      map((response) => {
+        return {
+          dt: response.dt,
+          temp: response.main.temp,
+          main: response.weather[0].main,
+          icon: response.weather[0].icon,
+        };
+      }),
+      toArray(),
+      share()
     );
   }
 
