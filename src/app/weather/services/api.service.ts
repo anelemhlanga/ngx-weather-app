@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, mergeMap, Observable, of, switchMap } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { APP_URL, APP_KEY, APP_UNIT } from 'src/app/app.config';
 import { IApiKey } from '../types/api-key.interface';
 import { IApiUrl } from '../types/api-url.interface';
 import { IApiUnit } from '../types/api-unit.interface';
+import { ICurrent } from '../types/current.interface';
+import { IForecast } from '../types/forecast.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +29,22 @@ export class ApiService {
           .set('appid', this.keyConfig.apiKey);
       }),
       switchMap((params) =>
-        this.httpClient.get(`${this.urlConfig.apiUrl}/weather`, { params })
-      )
+        this.httpClient.get<ICurrent>(`${this.urlConfig.apiUrl}/weather`, {
+          params,
+        })
+      ),
+      map((response) => {
+        return {
+          dt: response.dt,
+          temp: response.main.temp,
+          name: response.name,
+          sunrise: response.sys.sunrise,
+          sunset: response.sys.sunset,
+          timezone: response.timezone,
+          icon: response.weather[0].icon,
+          main: response.weather[0].main,
+        };
+      })
     );
   }
 
@@ -42,8 +58,12 @@ export class ApiService {
           .set('appid', this.keyConfig.apiKey);
       }),
       switchMap((params) =>
-        this.httpClient.get(`${this.urlConfig.apiUrl}/forecast`, { params })
-      )
+        this.httpClient.get<IForecast>(`${this.urlConfig.apiUrl}/forecast`, {
+          params,
+        })
+      ),
+      map((response) => response.list),
+      mergeMap((response) => of(...response))
     );
   }
 
