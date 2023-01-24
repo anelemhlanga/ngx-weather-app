@@ -27,7 +27,22 @@ export class ApiService {
           .set('appid', this.keyConfig.apiKey);
       }),
       switchMap((params) =>
-        this.httpClient.get(`${this.urlConfig.apiUrl}/current`, { params })
+        this.httpClient.get(`${this.urlConfig.apiUrl}/weather`, { params })
+      )
+    );
+  }
+
+  getForecastWeather() {
+    return this.getCurrentLocation().pipe(
+      map((coords) => {
+        return new HttpParams()
+          .set('lat', String(coords.latitude))
+          .set('lon', String(coords.longitude))
+          .set('units', this.unitConfig.apiUnit)
+          .set('appid', this.keyConfig.apiKey);
+      }),
+      switchMap((params) =>
+        this.httpClient.get(`${this.urlConfig.apiUrl}/forecast`, { params })
       )
     );
   }
