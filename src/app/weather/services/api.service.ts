@@ -74,7 +74,7 @@ export class ApiService {
       ),
       map((response) => response.list),
       mergeMap((response) => of(...response)),
-      filter((response, index) => index % 8 === 0),
+      filter((_response, index) => index % 8 === 0),
       map((response) => {
         return {
           dt: response.dt,
