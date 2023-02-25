@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "3bbd3d46-88fd-4a30-b764-46ea840c7546",
+		"name": "openweathermap services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15585319"
+	},
+	"item": [
+		{
+			"name": "Get Current Weather",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}/weather?lat=-25.9892403&lon=28.036672&appid={{api_key}}",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "-25.9892403"
+						},
+						{
+							"key": "lon",
+							"value": "28.036672"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Forecast Weather",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
