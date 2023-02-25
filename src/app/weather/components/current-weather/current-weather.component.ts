@@ -28,4 +28,11 @@ export class CurrentWeatherComponent {
   formatDateTime(value: number) {
     return moment.unix(value).format('DD-MM-YYYY, H:MM');
   }
+
+  convertToCelsius() {
+    console.log('test');
+  }
+  convertToFahrenheit() {
+    console.log('test');
+  }
 }
